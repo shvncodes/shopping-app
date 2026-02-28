@@ -1,0 +1,122 @@
+/* Header bar at the top of the app.
+   Keep it soft and playful. */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--color-bg-header);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-soft);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.logoText {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+.tagline {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.navLinks {
+  display: flex;
+  gap: var(--spacing-md);
+  font-size: 0.9rem;
+}
+
+.navLink {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navLinkActive {
+  background-color: var(--color-primary-pink);
+  color: var(--color-text-on-primary);
+}
+
+.navLink:hover {
+  background-color: var(--color-primary-pink-soft);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.iconButton {
+  position: relative;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft);
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  background-color: var(--color-bg-card);
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.2rem;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  background-color: var(--color-accent-lilac);
+  color: var(--color-text-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.authLinks {
+  display: flex;
+  gap: var(--spacing-xs);
+  font-size: 0.85rem;
+}
+
+.authPrimary {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background-color: var(--color-primary-pink);
+  color: var(--color-text-on-primary);
+}
+
+.authSecondary {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft);
+  background-color: var(--color-bg-card);
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding-inline: var(--spacing-lg);
+  }
+
+  .navLinks {
+    display: none;
+  }
+}
+

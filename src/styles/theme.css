@@ -1,0 +1,38 @@
+/* Theme variables for the whole app.
+   We use CSS variables so all components can
+   share the same \"girly\" color palette. */
+
+:root {
+  /* Main brand colors */
+  --color-primary-pink: #ff8ac9;
+  --color-primary-pink-soft: #ffe0f1;
+  --color-accent-lilac: #c6a5ff;
+  --color-accent-mint: #9ce6cf;
+
+  /* Text colors */
+  --color-text-main: #2b1b2f;
+  --color-text-muted: #7c5c8a;
+  --color-text-on-primary: #ffffff;
+
+  /* Backgrounds */
+  --color-bg-soft: #fff7fb;
+  --color-bg-card: #ffffff;
+  --color-bg-header: #ffe8f5;
+  --color-bg-footer: #fbe9ff;
+
+  /* Borders and shadows */
+  --color-border-soft: #f2c4e0;
+  --shadow-soft: 0 8px 20px rgba(255, 138, 201, 0.18);
+
+  /* Other helpers */
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+}
+

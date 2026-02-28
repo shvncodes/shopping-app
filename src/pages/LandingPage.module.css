@@ -1,0 +1,70 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.heroTitle {
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  line-height: 1.05;
+  margin-bottom: var(--spacing-md);
+}
+
+.highlight {
+  background: linear-gradient(90deg, var(--color-primary-pink), var(--color-accent-lilac));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.heroText {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  max-width: 32rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.secondaryLink {
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.cardTitle {
+  font-weight: 600;
+}
+
+.pillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background-color: var(--color-primary-pink-soft);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .root {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+

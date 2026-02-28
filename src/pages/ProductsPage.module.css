@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.title {
+  margin: 0;
+}
+
+.filters {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.filterPill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft);
+  background-color: var(--color-bg-card);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.filterPillActive {
+  background-color: var(--color-primary-pink);
+  color: var(--color-text-on-primary);
+}
+
+.gridPlaceholder {
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-soft);
+  font-size: 0.9rem;
+}
+

@@ -1,0 +1,17 @@
+.layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+.main {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .layout {
+    padding-inline: var(--spacing-lg);
+  }
+}
+

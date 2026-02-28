@@ -1,0 +1,30 @@
+.root {
+  max-width: 520px;
+  margin: 0 auto;
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.title {
+  margin-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  margin-bottom: var(--spacing-md);
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background-color: var(--color-primary-pink-soft);
+  font-size: 0.8rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
