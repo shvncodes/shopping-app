@@ -1,4 +1,4 @@
-import { AppLayout } from '../components/layout\AppLayout.jsx'
+import { AppLayout } from '../components/layout/AppLayout.jsx'
 import styles from './OrdersPage.module.css'
 
 // Orders page: shows all past orders for the user.

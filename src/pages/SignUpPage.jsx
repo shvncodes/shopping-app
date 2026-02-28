@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { AppLayout } from '../components/layout/AppLayout.jsx'
 import { Button } from '../components/ui/Button.jsx'
-import { InputField } from '../components/ui\InputField.jsx'
+import { InputField } from '../components/ui/InputField.jsx'
 import styles from './SignUpPage.module.css'
 
 // Sign up page: lets users create a new account.
