@@ -17,7 +17,7 @@ export function Button({
   if (fullWidth) classNames.push(styles.fullWidth)
   if (size === 'small') classNames.push(styles.small)
   if (disabled) classNames.push(styles.disabled)
-
+                       
   return (
     <button className={classNames.join(' ')} disabled={disabled} {...rest}>
       {children}

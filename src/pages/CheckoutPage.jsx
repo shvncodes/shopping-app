@@ -23,7 +23,7 @@ export function CheckoutPage() {
           <h2>Choose payment method</h2>
           <div className={styles.paymentMethods}>
             <label className={styles.radioRow}>
-              <input type="radio" name="payment" defaultChecked />
+              <input type="radio" name="payment" defaultChecked={true} />
               <span>UPI</span>
             </label>
             <label className={styles.radioRow}>
@@ -39,7 +39,7 @@ export function CheckoutPage() {
             To keep things beginner-friendly, this app never talks to a real payment gateway. We
             just create an order object in localStorage.
           </p>
-          <Button type="submit" fullWidth>
+          <Button type="submit" fullWidth={true}>
             Pay &amp; place order
           </Button>
         </form>

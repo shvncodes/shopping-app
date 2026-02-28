@@ -19,7 +19,7 @@ export function CartPage() {
           <p className={styles.placeholder}>
             Subtotal, shipping and total will be calculated from the cart context.
           </p>
-          <Button fullWidth>Proceed to checkout</Button>
+          <Button fullWidth={true}>Proceed to checkout</Button>
         </aside>
       </section>
     </AppLayout>
