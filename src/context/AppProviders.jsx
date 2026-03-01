@@ -1,12 +1,22 @@
 import PropTypes from 'prop-types'
+import { AuthProvider } from './AuthContext.jsx'
+import { CartProvider } from './CartContext.jsx'
+import { WishlistProvider } from './WishlistContext.jsx'
+import { OrdersProvider } from './OrdersContext.jsx'
 
-// This component will wrap the whole app with
-// different React Context providers (Auth, Cart, etc).
-// For now it is a simple passthrough so the routing
-// layout can work, and we will plug real providers
-// into it in a later step.
+// AppProviders composes all of our context providers
+// into a single component. This keeps main.jsx clean
+// and makes it easy to see which global states exist.
 export function AppProviders({ children }) {
-  return children
+  return (
+    <AuthProvider>
+      <CartProvider>
+        <WishlistProvider>
+          <OrdersProvider>{children}</OrdersProvider>
+        </WishlistProvider>
+      </CartProvider>
+    </AuthProvider>
+  )
 }
 
 AppProviders.propTypes = {
@@ -14,4 +24,5 @@ AppProviders.propTypes = {
 }
 
 export default AppProviders
+
 
