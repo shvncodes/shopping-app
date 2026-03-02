@@ -17,8 +17,8 @@ export function LandingPage() {
             <span className={styles.highlight}>skincare</span> cart, in one cute place.
           </h1>
           <p className={styles.heroText}>
-            Glow Cart is a tiny learning project where you can explore makeup, skincare and girly
-            accessories. Sign up, build wishlists, and practice React while you shop pretend items.
+            Glow Cart is an app where you can explore makeup, skincare and girly
+            accessories. Sign up, build wishlists and shop items.
           </p>
           <div className={styles.heroActions}>
             <Link to="/signup">
@@ -31,16 +31,6 @@ export function LandingPage() {
         </div>
 
         <aside className={styles.card}>
-          <div>
-            <div className={styles.cardTitle}>What you can practice here</div>
-            <div className={styles.pillList}>
-              <span className={styles.pill}>React Router</span>
-              <span className={styles.pill}>Context API</span>
-              <span className={styles.pill}>LocalStorage as backend</span>
-              <span className={styles.pill}>Cart &amp; wishlist logic</span>
-              <span className={styles.pill}>CSS Modules</span>
-            </div>
-          </div>
           <div>
             <div className={styles.cardTitle}>Product vibes</div>
             <div className={styles.pillList}>

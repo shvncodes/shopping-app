@@ -68,16 +68,16 @@ export function CartProvider({ children }) {
 
   // Derive some convenient values based on items.
   const { itemCount, subtotal } = useMemo(() => {
-    const totalProductCount = 0;
-    const totalPrice = 0;
+    let totalProductCount = 0;
+    let totalPrice = 0;
 
-    for(const item of items) {
+    for (const item of items) {
       const product = getProductById(item.productId);
       totalPrice += (product.price * item.quantity);
       totalProductCount += item.quantity;
     }
 
-    return {itemCount: totalProductCount, subtotal: totalPrice};
+    return { itemCount: totalProductCount, subtotal: totalPrice };
   }, [items]);
 
   const value = {

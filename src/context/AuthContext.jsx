@@ -30,6 +30,7 @@ export function AuthProvider({ children }) {
   }
 
   const signOut = () => {
+    confirm("Are you sure you want to sign out?");
     clearCurrentUser();
     setUser(null);
   }
