@@ -1,16 +1,43 @@
-import { Link } from 'react-router-dom'
-import { AppLayout } from '../components/layout/AppLayout.jsx'
-import { Button } from '../components/ui/Button.jsx'
-import { InputField } from '../components/ui/InputField.jsx'
-import styles from './SignUpPage.module.css'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppLayout } from '../components/layout/AppLayout.jsx';
+import { Button } from '../components/ui/Button.jsx';
+import { InputField } from '../components/ui/InputField.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import styles from './SignUpPage.module.css';
 
-// Sign up page: lets users create a new account.
-// Later this will talk to our AuthContext and mock
-// localStorage \"backend\" to actually store accounts.
 export function SignUpPage() {
+  const navigate = useNavigate();
+  const { signUp } = useAuth();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
   const handleSubmit = (event) => {
-    event.preventDefault()
-    // Later we will read the form values and call AuthContext.signUp.
+    event.preventDefault();
+
+    if (!name || !email || !password || !confirmPassword) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password should be at least 6 characters.')
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    try {
+      signUp(name, email, password);
+      navigate('/products');
+    } catch (e) {
+      setError(e.message);
+    }
   }
 
   return (
@@ -23,14 +50,37 @@ export function SignUpPage() {
         </p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          <InputField id="name" label="Name" placeholder="Your pretty name" />
-          <InputField id="email" label="Email" type="email" placeholder="you@example.com" />
-          <InputField id="password" label="Password" type="password" placeholder="Create password" />
+          <InputField
+            id="name"
+            label="Name"
+            placeholder="Your pretty name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <InputField
+            id="email"
+            label="Email"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputField
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="Create password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <InputField
             id="confirmPassword"
             label="Confirm password"
             type="password"
             placeholder="Repeat password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={error}
           />
           <Button type="submit" fullWidth={true}>
             Sign up
@@ -45,8 +95,7 @@ export function SignUpPage() {
         </p>
       </section>
     </AppLayout>
-  )
+  );
 }
 
-export default SignUpPage
-
+export default SignUpPage;

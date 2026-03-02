@@ -1,22 +1,35 @@
-import { AppLayout } from '../components/layout/AppLayout.jsx'
-import styles from './OrdersPage.module.css'
+import { AppLayout } from '../components/layout/AppLayout.jsx';
+import { Card } from '../components/ui/Card.jsx';
+import { EmptyState } from '../components/ui/EmptyState.jsx';
+import { OrderCard } from '../components/orders/OrderCard.jsx';
+import { useOrders } from '../context/OrdersContext.jsx';
+import styles from './OrdersPage.module.css';
 
 // Orders page: shows all past orders for the user.
-// Later we will map over orders from OrdersContext
-// and render an OrderCard for each one.
 export function OrdersPage() {
+  const { orders } = useOrders();
+
   return (
     <AppLayout>
       <section className={styles.root}>
         <h1 className={styles.title}>Your orders</h1>
-        <p className={styles.placeholder}>
-          Once we track orders in localStorage, this page will show each past order with total,
-          status and a link to detailed view.
-        </p>
+        {orders.length === 0 ? (
+          <EmptyState
+            title="No orders yet"
+            description="Place your first order to see it appear here."
+            actionLabel="Browse products"
+            onAction={() => (window.location.href = '/products')}
+          />
+        ) : (
+          <Card subtle>
+            {orders.map((order) => (
+              <OrderCard key={order.id} order={order} />
+            ))}
+          </Card>
+        )}
       </section>
     </AppLayout>
   )
 }
 
-export default OrdersPage
-
+export default OrdersPage;

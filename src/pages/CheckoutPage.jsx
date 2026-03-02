@@ -1,13 +1,25 @@
-import { AppLayout } from '../components/layout/AppLayout.jsx'
-import { Button } from '../components/ui/Button.jsx'
-import styles from './CheckoutPage.module.css'
+import { useNavigate } from 'react-router-dom';
+import { AppLayout } from '../components/layout/AppLayout.jsx';
+import { Button } from '../components/ui/Button.jsx';
+import { CartSummary } from '../components/cart/CartSummary.jsx';
+import { EmptyState } from '../components/ui/EmptyState.jsx';
+import { useCart } from '../context/CartContext.jsx';
+import { useOrders } from '../context/OrdersContext.jsx';
+import styles from './CheckoutPage.module.css';
 
-// Checkout page: shows a summary of items and a fake payment form.
-// Later we will use OrdersContext here to create real orders.
 export function CheckoutPage() {
+  const navigate = useNavigate();
+  const { items, subtotal, clearCart } = useCart();
+  const { registerOrder } = useOrders();
+
   const handleSubmit = (event) => {
-    event.preventDefault()
-    // Later: create order from cart and navigate to confirmation page.
+    event.preventDefault();
+    if (!items.length) return;
+
+    // We create a very small order object: only cart items and total.
+    const order = registerOrder({ items, total: subtotal });
+    clearCart();
+    navigate(`/order-confirmation/${order.id}`);
   }
 
   return (
@@ -15,9 +27,22 @@ export function CheckoutPage() {
       <section className={styles.root}>
         <div className={styles.summaryCard}>
           <h1 className={styles.title}>Review your order</h1>
-          <p className={styles.note}>
-            Here we will show a list of items and totals from the cart context.
-          </p>
+          {items.length === 0 ? (
+            <EmptyState
+              title="Your cart is empty"
+              description="Add something cute to your cart before checking out."
+              actionLabel="Browse products"
+              onAction={() => navigate('/products')}
+            />
+          ) : (
+            <>
+              <p className={styles.note}>
+                We use the cart context to calculate this summary. Try reloading the page and you
+                will see that localStorage keeps your cart.
+              </p>
+              <CartSummary subtotal={subtotal} />
+            </>
+          )}
         </div>
         <form className={styles.paymentCard} onSubmit={handleSubmit}>
           <h2>Choose payment method</h2>
@@ -45,8 +70,7 @@ export function CheckoutPage() {
         </form>
       </section>
     </AppLayout>
-  )
+  );
 }
 
-export default CheckoutPage
-
+export default CheckoutPage;

@@ -1,20 +1,34 @@
-import { Link } from 'react-router-dom'
-import { AppLayout } from '../components/layout/AppLayout.jsx'
-import { Button } from '../components/ui/Button.jsx'
-import { InputField } from '../components/ui/InputField.jsx'
-import styles from './SignInPage.module.css'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppLayout } from '../components/layout/AppLayout.jsx';
+import { Button } from '../components/ui/Button.jsx';
+import { InputField } from '../components/ui/InputField.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import styles from './SignInPage.module.css';
 
-// Very simple sign in page.
-// In a later step we will connect this to AuthContext
-// and localStorage so it can actually \"log in\" a user.
 export function SignInPage() {
-  // For now we just show the form structure.
-  // When we wire it up we will add React state and
-  // basic validation logic here.
+  const navigate = useNavigate();
+  const { signIn } = useAuth();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    // Later we will read the form values and call AuthContext.signIn.
+    event.preventDefault();
+
+    // Very small client-side validation.
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      return;
+    }
+
+    try {
+      signIn(email, password);
+      navigate('/products');
+    } catch (e) {
+      setError(e.message);
+    }
   }
 
   return (
@@ -27,8 +41,23 @@ export function SignInPage() {
         </p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          <InputField id="email" label="Email" type="email" placeholder="you@example.com" />
-          <InputField id="password" label="Password" type="password" placeholder="••••••••" />
+          <InputField
+            id="email"
+            label="Email"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputField
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={error}
+          />
           <Button type="submit" fullWidth={true}>
             Sign in
           </Button>
@@ -42,8 +71,7 @@ export function SignInPage() {
         </p>
       </section>
     </AppLayout>
-  )
+  );
 }
 
-export default SignInPage
-
+export default SignInPage;

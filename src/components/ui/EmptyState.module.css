@@ -1,0 +1,23 @@
+.root {
+  text-align: center;
+  padding: var(--spacing-xl);
+}
+
+.title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-md);
+}
+
+.illustration {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 0 auto var(--spacing-md);
+  background: radial-gradient(circle at 30% 20%, #ffffff 0, #ffe0f1 40%, #e3d4ff 100%);
+}
+

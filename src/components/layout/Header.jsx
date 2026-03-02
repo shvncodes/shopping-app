@@ -1,15 +1,24 @@
-import { NavLink } from 'react-router-dom'
-import styles from './Header.module.css'
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext.jsx';
+import { useWishlist } from '../../context/WishlistContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import styles from './Header.module.css';
 
-// The Header is shown on every page.
-// It contains navigation links and shortcuts
-// to cart and wishlist so the user can move
-// around the app easily.
 export function Header() {
-  // For now, we hard-code cart / wishlist counts.
-  // Later these will come from React Context.
-  const cartCount = 0
-  const wishlistCount = 0
+  // useNavigate lets us redirect the user after sign out.
+  const navigate = useNavigate();
+
+  // Cart and wishlist counts come from their contexts.
+  const { itemCount: cartCount } = useCart();
+  const { itemCount: wishlistCount } = useWishlist();
+
+  // Auth context tells us if the user is signed in.
+  const { user, isSignedIn, signOut } = useAuth();
+
+  const handleSignOut = () => {
+    signOut();
+    navigate('/');
+  }
 
   return (
     <header className={styles.header}>
@@ -56,19 +65,27 @@ export function Header() {
             {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>}
           </NavLink>
 
-          <div className={styles.authLinks}>
-            <NavLink to="/signin" className={styles.authSecondary}>
-              Sign in
-            </NavLink>
-            <NavLink to="/signup" className={styles.authPrimary}>
-              Sign up
-            </NavLink>
-          </div>
+          {isSignedIn ? (
+            <div className={styles.authLinks}>
+              <span className={styles.authSecondary}>Hi, {user.name}</span>
+              <button type="button" className={styles.authPrimary} onClick={handleSignOut}>
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <div className={styles.authLinks}>
+              <NavLink to="/signin" className={styles.authSecondary}>
+                Sign in
+              </NavLink>
+              <NavLink to="/signup" className={styles.authPrimary}>
+                Sign up
+              </NavLink>
+            </div>
+          )}
         </div>
       </nav>
     </header>
-  )
+  );
 }
 
-export default Header
-
+export default Header;

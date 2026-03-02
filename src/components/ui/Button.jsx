@@ -11,18 +11,18 @@ export function Button({
   disabled = false,
   ...rest
 }) {
-  const classNames = [styles.button]
+  const classNames = [styles.button];
 
-  if (variant && styles[variant]) classNames.push(styles[variant])
-  if (fullWidth) classNames.push(styles.fullWidth)
-  if (size === 'small') classNames.push(styles.small)
-  if (disabled) classNames.push(styles.disabled)
+  if (variant && styles[variant]) classNames.push(styles[variant]);
+  if (fullWidth) classNames.push(styles.fullWidth);
+  if (size === 'small') classNames.push(styles.small);
+  if (disabled) classNames.push(styles.disabled);
                        
   return (
     <button className={classNames.join(' ')} disabled={disabled} {...rest}>
       {children}
     </button>
-  )
+  );
 }
 
 Button.propTypes = {
@@ -33,5 +33,4 @@ Button.propTypes = {
   disabled: PropTypes.bool,
 }
 
-export default Button
-
+export default Button;

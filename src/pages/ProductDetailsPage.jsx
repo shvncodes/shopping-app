@@ -1,31 +1,58 @@
-import { useParams } from 'react-router-dom'
-import { AppLayout } from '../components/layout/AppLayout.jsx'
-import { Button } from '../components/ui/Button.jsx'
-import styles from './ProductDetailsPage.module.css'
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppLayout } from '../components/layout/AppLayout.jsx';
+import { Button } from '../components/ui/Button.jsx';
+import { getProductById } from '../data/products.js';
+import { useCart } from '../context/CartContext.jsx';
+import { useWishlist } from '../context/WishlistContext.jsx';
+import styles from './ProductDetailsPage.module.css';
 
-// Shows details for a single product.
-// For now we only read the product id from the URL.
-// Later we will look up the product from our products data.
 export function ProductDetailsPage() {
   // useParams lets us read the dynamic part of the URL, e.g. /products/123.
-  const { productId } = useParams()
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const { addToWishlist } = useWishlist();
+
+  const product = getProductById(productId);
+
+  if (!product) {
+    return (
+      <AppLayout>
+        <p>We could not find this product. It might have been removed from our sample data.</p>
+      </AppLayout>
+    );
+  }
+
+  const handleAddToCart = () => {
+    addToCart(product.id, 1);
+  }
+
+  const handleAddToWishlist = () => {
+    addToWishlist(product.id);
+  }
+
+  const handleBuyNow = () => {
+    addToCart(product.id, 1);
+    navigate('/checkout');
+  }
 
   return (
     <AppLayout>
       <section className={styles.root}>
         <div className={styles.imagePlaceholder} />
         <div className={styles.content}>
-          <h1>Product #{productId}</h1>
-          <p className={styles.price}>₹ 999.00</p>
-          <p>
-            When we add real product data, this section will show the product name, shade, finish,
-            skin type, and a cute description.
-          </p>
-          <p className={styles.meta}>Category: Makeup / Skincare / Accessories</p>
+          <h1>{product.name}</h1>
+          <p className={styles.price}>₹ {product.price}</p>
+          <p>{product.description}</p>
+          <p className={styles.meta}>Category: {product.category}</p>
           <div className={styles.actions}>
-            <Button>Add to cart</Button>
-            <Button variant="secondary">Add to wishlist</Button>
-            <Button variant="ghost">Buy now</Button>
+            <Button onClick={handleAddToCart}>Add to cart</Button>
+            <Button variant="secondary" onClick={handleAddToWishlist}>
+              Add to wishlist
+            </Button>
+            <Button variant="ghost" onClick={handleBuyNow}>
+              Buy now
+            </Button>
           </div>
         </div>
       </section>
@@ -33,5 +60,4 @@ export function ProductDetailsPage() {
   )
 }
 
-export default ProductDetailsPage
-
+export default ProductDetailsPage;
