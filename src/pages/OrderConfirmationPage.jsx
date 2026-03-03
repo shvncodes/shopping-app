@@ -32,10 +32,6 @@ export function OrderConfirmationPage() {
         <div className={styles.badge}>Order placed</div>
         <h1 className={styles.title}>Your glow goodies are on the way ✨</h1>
         <p>
-          This is a fake store, but the React logic is real. We saved this order in localStorage so
-          you can still see it even after refreshing the page.
-        </p>
-        <p>
           Order reference: {order.id} • {itemCount} item{itemCount !== 1 ? 's' : ''} • ₹{' '}
           {order.total}
         </p>

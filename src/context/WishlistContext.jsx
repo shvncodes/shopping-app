@@ -13,25 +13,31 @@ export function WishlistProvider({ children }) {
     setItems(loadWishlist());
   }, []);
 
-  useEffect(() => {
-    saveWishlist(items);
-  }, [items]);
-
   const addToWishlist = (productId) => {
-    setItems((prev) => {
-      if (prev.some((item) => item.productId === productId)) {
-        return prev;
-      }
-      return [...prev, { productId }];
+    const existingItem = items.some((item) => {
+      return item.productId === productId;
     })
+
+    if (existingItem) {
+      return;
+    }
+
+    const updatedList = [...items, { productId }];
+    setItems(updatedList);
+    saveWishlist(updatedList);
   }
 
   const removeFromWishlist = (productId) => {
-    setItems((prev) => prev.filter((item) => item.productId !== productId));
+    const updatedList = items.filter((item) => {
+      return item.productId !== productId;
+    })
+    setItems(updatedList);
+    saveWishlist(updatedList);
   }
 
   const clearWishlist = () => {
     setItems([]);
+    saveWishlist([]);
   }
 
   const value = {

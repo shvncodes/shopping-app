@@ -14,56 +14,56 @@ export function CartProvider({ children }) {
     setItems(loadCart());
   }, []);
 
-  // Whenever the cart changes, persist it.
-  useEffect(() => {
-    saveCart(items);
-  }, [items]);
-
   const addToCart = (productId, quantity = 1) => {
-    setItems((prevItems) => {
-      const existing = prevItems.find((item) => {
-        return item.productId === productId;
-      });
-      if (existing) {
-        return prevItems.map((item) => {
-          if (item.productId === productId) {
-            return {
-              ...item,
-              quantity: item.quantity + quantity
-            }
-          }
-          return item;
-        })
-      }
-      return ([...prevItems, { productId, quantity }])
-    });
-  };
+    let updatedCartItems = items;
+
+    const existingItem = items.find((item) => {
+      return item.productId === productId;
+    })
+
+    if (existingItem) {
+      updatedCartItems = items.map((item) => {
+        if (item.productId === productId) {
+          return { ...item, quantity: item.quantity + quantity };
+        }
+        return item;
+      })
+    } else {
+      updatedCartItems = [...items, { productId, quantity }];
+    }
+
+    setItems(updatedCartItems);
+    saveCart(updatedCartItems);
+  }
 
   const removeFromCart = (productId) => {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => {
-        if (item.productId === productId) return false;
-        return true;
-      });
-    })
+    const updatedCartItems = items.filter((item) => {
+      if (item.productId === productId) return false;
+      return true;
+    });
+
+    setItems(updatedCartItems);
+    saveCart(updatedCartItems);
   }
 
   const updateQuantity = (productId, quantity) => {
-    setItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.productId === productId) {
-          return {
-            ...item,
-            quantity: quantity
-          }
+    const updatedCartItems = items.map((item) => {
+      if (item.productId === productId) {
+        return {
+          ...item,
+          quantity: quantity
         }
-        return item;
-      });
-    })
+      }
+      return item;
+    });
+
+    setItems(updatedCartItems);
+    saveCart(updatedCartItems);
   }
 
   const clearCart = () => {
     setItems([]);
+    saveCart([]);
   };
 
   // Derive some convenient values based on items.
