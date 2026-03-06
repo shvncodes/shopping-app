@@ -17,7 +17,8 @@ Admin Case:
 
 ------------
 Fix:
-- Footer 
+- Footer
+- Confirmation modal
 - Dont allow adding products into the cart/wish-list until sign-in
 - Dont show orders if user is not sign-in
 - Make these orders and things user-specific
