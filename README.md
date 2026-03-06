@@ -11,4 +11,18 @@ User Case:
 --------
 
 Admin Case:
-- 
+- Remove the hardcoded Products, and Add support for adding new Products and only Admins can do CRUD operations on the products
+- Make an Admin UI (Store UI) - /admin/store
+
+
+------------
+Fix:
+- Footer 
+- Dont allow adding products into the cart/wish-list until sign-in
+- Dont show orders if user is not sign-in
+- Make these orders and things user-specific
+    - Cart, Wish-list and Orders
+- Enhance the UI and UX of the Header and its buttons
+- Enhance the UI and UX of the Increase/Decrease Qty (use - and +)
+- Add random images from internet for products
+
