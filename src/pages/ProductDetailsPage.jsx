@@ -5,9 +5,11 @@ import { getProductById } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
 import { useWishlist } from '../context/WishlistContext.jsx';
 import styles from './ProductDetailsPage.module.css';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export function ProductDetailsPage() {
   // useParams lets us read the dynamic part of the URL, e.g. /products/123.
+  const { isSignedIn } = useAuth();
   const { productId } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -32,6 +34,10 @@ export function ProductDetailsPage() {
   }
 
   const handleBuyNow = () => {
+    if (!isSignedIn) {
+      navigate('/signin');
+      return;
+    }
     addToCart(product.id, 1);
     navigate('/checkout');
   }
