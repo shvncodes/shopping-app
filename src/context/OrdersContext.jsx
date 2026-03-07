@@ -1,18 +1,28 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createOrder, loadOrders } from '../data/mockApi.js'
+import { useAuth } from './AuthContext.jsx';
 
 // OrdersContext keeps track of all placed orders.
 // Each order is stored with an id, createdAt, items and total.
 const OrdersContext = createContext(null);
 
 export function OrdersProvider({ children }) {
+  const { isSignedIn } = useAuth();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    if (!isSignedIn) {
+      setOrders([]);
+      return;
+    }
     setOrders(loadOrders());
-  }, [])
+  }, [isSignedIn])
 
   const registerOrder = ({ items, total }) => {
+    if (!isSignedIn) {
+      alert("Please Sign in");
+      return;
+    }
     const newOrder = createOrder({ items, total });
     setOrders((prev) => {
       return [...prev, newOrder];
@@ -21,10 +31,18 @@ export function OrdersProvider({ children }) {
   }
 
   const getOrderById = (orderId) => {
+    if (!isSignedIn) {
+      alert("Please Sign in");
+      return;
+    }
     return orders.find((order) => order.id === orderId) || null;
   }
 
   const getLatestOrder = () => {
+    if (!isSignedIn) {
+      alert("Please Sign in");
+      return;
+    }
     if (!orders.length) return null;
     return orders[orders.length - 1];
   }

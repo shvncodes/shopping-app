@@ -1,20 +1,31 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { loadCart, saveCart } from "../data/mockApi.js";
 import { getProductById } from "../data/products.js";
+import { useAuth } from "./AuthContext.jsx";
 
 // CartContext manages items the user intends to buy.
 // Each item is stored as { productId, quantity }.
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
+  const { isSignedIn } = useAuth();
+
   const [items, setItems] = useState([]);
 
   // Load initial cart from localStorage.
   useEffect(() => {
+    if (!isSignedIn) {
+      setItems([])
+      return;
+    }
     setItems(loadCart());
-  }, []);
+  }, [isSignedIn]);
 
   const addToCart = (productId, quantity = 1) => {
+    if (!isSignedIn) {
+      alert("Please Sign in");
+      return;
+    }
     let updatedCartItems = items;
 
     const existingItem = items.find((item) => {
@@ -37,6 +48,10 @@ export function CartProvider({ children }) {
   }
 
   const removeFromCart = (productId) => {
+    if (!isSignedIn) {
+      alert("Please Sign in");
+      return;
+    }
     const updatedCartItems = items.filter((item) => {
       if (item.productId === productId) return false;
       return true;
@@ -47,6 +62,10 @@ export function CartProvider({ children }) {
   }
 
   const updateQuantity = (productId, quantity) => {
+    if (!isSignedIn) {
+      alert("Please Sign in");
+      return;
+    }
     const updatedCartItems = items.map((item) => {
       if (item.productId === productId) {
         return {
