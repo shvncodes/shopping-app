@@ -13,7 +13,7 @@ import styles from './ProductsPage.module.css';
 export function ProductsPage() {
   // activeFilter lives in local component state.
   const [activeFilter, setActiveFilter] = useState('all');
-  const { addToCart } = useCart();
+  const { addToCart, items: cartItems } = useCart();
   const { addToWishlist } = useWishlist();
 
   const filteredProducts = getProductsByCategory(activeFilter);
@@ -37,36 +37,32 @@ export function ProductsPage() {
           <div className={styles.filters}>
             <button
               type="button"
-              className={`${styles.filterPill} ${
-                activeFilter === 'all' ? styles.filterPillActive : ''
-              }`}
+              className={`${styles.filterPill} ${activeFilter === 'all' ? styles.filterPillActive : ''
+                }`}
               onClick={() => setActiveFilter('all')}
             >
               All
             </button>
             <button
               type="button"
-              className={`${styles.filterPill} ${
-                activeFilter === 'makeup' ? styles.filterPillActive : ''
-              }`}
+              className={`${styles.filterPill} ${activeFilter === 'makeup' ? styles.filterPillActive : ''
+                }`}
               onClick={() => setActiveFilter('makeup')}
             >
               Makeup
             </button>
             <button
               type="button"
-              className={`${styles.filterPill} ${
-                activeFilter === 'skincare' ? styles.filterPillActive : ''
-              }`}
+              className={`${styles.filterPill} ${activeFilter === 'skincare' ? styles.filterPillActive : ''
+                }`}
               onClick={() => setActiveFilter('skincare')}
             >
               Skincare
             </button>
             <button
               type="button"
-              className={`${styles.filterPill} ${
-                activeFilter === 'accessories' ? styles.filterPillActive : ''
-              }`}
+              className={`${styles.filterPill} ${activeFilter === 'accessories' ? styles.filterPillActive : ''
+                }`}
               onClick={() => setActiveFilter('accessories')}
             >
               Accessories
@@ -76,6 +72,7 @@ export function ProductsPage() {
 
         {filteredProducts.length > 0 ? (
           <ProductGrid
+            cartItems={cartItems}
             products={filteredProducts}
             onAddToCart={handleAddToCart}
             onAddToWishlist={handleAddToWishlist}
