@@ -16,14 +16,15 @@ Admin Case:
 
 
 ------------
-Fix:
-- Footer
-- Confirmation modal
-- Dont allow adding products into the cart/wish-list until sign-in
-- Dont show orders if user is not sign-in
-- Make these orders and things user-specific
-    - Cart, Wish-list and Orders
+Fixes and some features:
+- On click of product card, it should redirect to the product details page
+- When applying filter, it should persist in the url, so on reload we can see the same page
+    - We can do this with the help of store filter in the url in query params
+- Add search capabilities in Products page (search based on name, category, type, badge, and description)
+    - Make sure we persist this as well like other filters (in url)
+- Add capabilty of sorting based on price (Low to High and High to Low)
 - Enhance the UI and UX of the Header and its buttons
+- Enhance the landing page of the app, it looks empty (Ask ChatGPT for an sample UI, and implement that)
 - Enhance the UI and UX of the Increase/Decrease Qty (use - and +)
 - Add random images from internet for products
 

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card } from '../ui/Card.jsx';
 import { Button } from '../ui/Button.jsx';
 import { Badge } from '../ui/Badge.jsx';
@@ -8,8 +8,11 @@ import styles from './ProductCard.module.css';
 // ProductCard shows a compact view of a single product
 // and exposes common actions: add to cart, wishlist, view details.
 export function ProductCard({ product, onAddToCart, onAddToWishlist }) {
+  const navigate = useNavigate();
   return (
-    <Card clickable>
+    <Card clickable handleClick={() => {
+      navigate(`/products/${product.id}`);
+    }}>
       <div className={styles.cardInner}>
         <div className={styles.image} />
         <div className={styles.nameRow}>
@@ -21,21 +24,25 @@ export function ProductCard({ product, onAddToCart, onAddToWishlist }) {
         </div>
         <div className={styles.price}>₹ {product.price}</div>
         <div className={styles.actions}>
-          <Button size="small" onClick={() => onAddToCart(product.id)}>
+          <Button size="small" onClick={(e) => {
+            e.stopPropagation()
+            onAddToCart(product.id)
+          }}>
             Add to cart
           </Button>
           <Button
             size="small"
             variant="secondary"
-            onClick={() => onAddToWishlist(product.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToWishlist(product.id)
+            }}
           >
             Wishlist
           </Button>
-          <Link to={`/products/${product.id}`}>
-            <Button size="small" variant="ghost">
-              Details
-            </Button>
-          </Link>
+          <Button size="small" variant="ghost">
+            Details
+          </Button>
         </div>
       </div>
     </Card>
