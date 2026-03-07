@@ -7,7 +7,7 @@ import { useAuth } from './AuthContext.jsx';
 const OrdersContext = createContext(null);
 
 export function OrdersProvider({ children }) {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, user } = useAuth();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export function OrdersProvider({ children }) {
       setOrders([]);
       return;
     }
-    setOrders(loadOrders());
+    setOrders(loadOrders(user.id));
   }, [isSignedIn])
 
   const registerOrder = ({ items, total }) => {
@@ -23,7 +23,7 @@ export function OrdersProvider({ children }) {
       alert("Please Sign in");
       return;
     }
-    const newOrder = createOrder({ items, total });
+    const newOrder = createOrder(user.id, { items, total });
     setOrders((prev) => {
       return [...prev, newOrder];
     })

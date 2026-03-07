@@ -8,7 +8,7 @@ import { useAuth } from "./AuthContext.jsx"
 const WishlistContext = createContext(null);
 
 export function WishlistProvider({ children }) {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, user } = useAuth();
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function WishlistProvider({ children }) {
       setItems([]);
       return;
     }
-    setItems(loadWishlist());
+    setItems(loadWishlist(user.id));
   }, [isSignedIn]);
 
   const addToWishlist = (productId) => {
@@ -34,7 +34,7 @@ export function WishlistProvider({ children }) {
 
     const updatedList = [...items, { productId }];
     setItems(updatedList);
-    saveWishlist(updatedList);
+    saveWishlist(user.id, updatedList);
   }
 
   const removeFromWishlist = (productId) => {
@@ -46,12 +46,12 @@ export function WishlistProvider({ children }) {
       return item.productId !== productId;
     })
     setItems(updatedList);
-    saveWishlist(updatedList);
+    saveWishlist(user.id, updatedList);
   }
 
   const clearWishlist = () => {
     setItems([]);
-    saveWishlist([]);
+    saveWishlist(user.id, []);
   }
 
   const value = {

@@ -8,7 +8,7 @@ import { useAuth } from "./AuthContext.jsx";
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, user } = useAuth();
 
   const [items, setItems] = useState([]);
 
@@ -18,7 +18,8 @@ export function CartProvider({ children }) {
       setItems([])
       return;
     }
-    setItems(loadCart());
+
+    setItems(loadCart(user.id));
   }, [isSignedIn]);
 
   const addToCart = (productId, quantity = 1) => {
@@ -44,7 +45,7 @@ export function CartProvider({ children }) {
     }
 
     setItems(updatedCartItems);
-    saveCart(updatedCartItems);
+    saveCart(user.id, updatedCartItems);
   }
 
   const removeFromCart = (productId) => {
@@ -58,7 +59,7 @@ export function CartProvider({ children }) {
     });
 
     setItems(updatedCartItems);
-    saveCart(updatedCartItems);
+    saveCart(user.id, updatedCartItems);
   }
 
   const updateQuantity = (productId, quantity) => {
@@ -77,12 +78,12 @@ export function CartProvider({ children }) {
     });
 
     setItems(updatedCartItems);
-    saveCart(updatedCartItems);
+    saveCart(user.id, updatedCartItems);
   }
 
   const clearCart = () => {
     setItems([]);
-    saveCart([]);
+    saveCart(user.id, []);
   };
 
   // Derive some convenient values based on items.

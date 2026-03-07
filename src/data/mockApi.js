@@ -61,39 +61,48 @@ export function clearCurrentUser() {
 
 // ---------- Cart ----------
 
-export function loadCart() {
-  // Cart is a list of { productId, quantity }.
-  return loadFromStorage(STORAGE_KEYS.CART, []);
+export function loadCart(userId) {
+  // Cart is a object of userId: productList.
+  const cartData = loadFromStorage(STORAGE_KEYS.CART, {});
+  return cartData[userId] || [];
 }
 
-export function saveCart(items) {
-  saveToStorage(STORAGE_KEYS.CART, items);
+export function saveCart(userId, items = []) {
+  const cartData = loadFromStorage(STORAGE_KEYS.CART, {});
+  cartData[userId] = items;
+  saveToStorage(STORAGE_KEYS.CART, cartData);
 }
 
 // ---------- Wishlist ----------
 
-export function loadWishlist() {
-  // Wishlist is a list of { productId }.
-  return loadFromStorage(STORAGE_KEYS.WISHLIST, []);
+export function loadWishlist(userId) {
+  // Wishlist is a object of userId: productList.
+  const wishlistData = loadFromStorage(STORAGE_KEYS.WISHLIST, {});
+  return wishlistData[userId] || [];
 }
 
-export function saveWishlist(items) {
-  saveToStorage(STORAGE_KEYS.WISHLIST, items);
+export function saveWishlist(userId, items = []) {
+  const wishlistData = loadFromStorage(STORAGE_KEYS.WISHLIST, {});
+  wishlistData[userId] = items;
+  saveToStorage(STORAGE_KEYS.WISHLIST, wishlistData);
 }
 
 // ---------- Orders ----------
 
-export function loadOrders() {
+export function loadOrders(userId) {
   // Orders are stored as an array of order objects.
-  return loadFromStorage(STORAGE_KEYS.ORDERS, []);
+  const orderedData = loadFromStorage(STORAGE_KEYS.ORDERS, {});
+  return orderedData[userId] || [];
 }
 
-export function saveOrders(orders) {
-  saveToStorage(STORAGE_KEYS.ORDERS, orders);
+export function saveOrders(userId, orders = []) {
+  const orderedData = loadFromStorage(STORAGE_KEYS.ORDERS, {});
+  orderedData[userId] = orders;
+  saveToStorage(STORAGE_KEYS.ORDERS, orderedData);
 }
 
-export function createOrder({ items, total }) {
-  const existing = loadOrders();
+export function createOrder(userId, { items, total }) {
+  const existing = loadOrders(userId);
   const newOrder = {
     id: String(Date.now()),
     createdAt: new Date().toISOString(),
@@ -101,7 +110,7 @@ export function createOrder({ items, total }) {
     total,
   }
   const updated = [...existing, newOrder];
-  saveOrders(updated);
+  saveOrders(userId, updated);
   return newOrder;
 }
 
