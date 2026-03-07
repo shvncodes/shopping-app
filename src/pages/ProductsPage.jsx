@@ -14,7 +14,7 @@ export function ProductsPage() {
   // activeFilter lives in local component state.
   const [activeFilter, setActiveFilter] = useState('all');
   const { addToCart, items: cartItems } = useCart();
-  const { addToWishlist } = useWishlist();
+  const { addToWishlist, items: wishlistItems } = useWishlist();
 
   const filteredProducts = getProductsByCategory(activeFilter);
 
@@ -73,6 +73,7 @@ export function ProductsPage() {
         {filteredProducts.length > 0 ? (
           <ProductGrid
             cartItems={cartItems}
+            wishlistItems={wishlistItems}
             products={filteredProducts}
             onAddToCart={handleAddToCart}
             onAddToWishlist={handleAddToWishlist}

@@ -7,7 +7,7 @@ import styles from './ProductCard.module.css';
 
 // ProductCard shows a compact view of a single product
 // and exposes common actions: add to cart, wishlist, view details.
-export function ProductCard({ isCartItem, product, onAddToCart, onAddToWishlist }) {
+export function ProductCard({ isCartItem, isWishlistItem, product, onAddToCart, onAddToWishlist }) {
   const navigate = useNavigate();
   return (
     <Card clickable handleClick={() => {
@@ -39,10 +39,14 @@ export function ProductCard({ isCartItem, product, onAddToCart, onAddToWishlist 
             variant="secondary"
             onClick={(e) => {
               e.stopPropagation();
+              if (isWishlistItem) {
+                navigate('/wishlist');
+                return;
+              }
               onAddToWishlist(product.id)
             }}
           >
-            Wishlist
+            {isWishlistItem ? "Go to Wishlist" : "Wishlist"}
           </Button>
           <Button size="small" variant="ghost">
             Details

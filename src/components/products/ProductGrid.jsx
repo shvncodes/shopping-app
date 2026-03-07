@@ -3,13 +3,14 @@ import { ProductCard } from './ProductCard.jsx';
 import styles from './ProductGrid.module.css';
 
 // ProductGrid lays out ProductCard components in a nice responsive grid.
-export function ProductGrid({ cartItems, products, onAddToCart, onAddToWishlist }) {
+export function ProductGrid({ cartItems, wishlistItems, products, onAddToCart, onAddToWishlist }) {
   return (
     <div className={styles.grid}>
       {products.map((product) => (
         <ProductCard
           key={product.id}
           isCartItem={cartItems.some((cartItem) => cartItem.productId === product.id)}
+          isWishlistItem={wishlistItems.some((wishlistItem) => wishlistItem.productId === product.id)}
           product={product}
           onAddToCart={onAddToCart}
           onAddToWishlist={onAddToWishlist}
