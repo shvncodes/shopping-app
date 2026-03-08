@@ -1,31 +1,37 @@
-import { Link } from 'react-router-dom'
-import { AppLayout } from '../components/layout/AppLayout.jsx'
-import { Button } from '../components/ui/Button.jsx'
-import styles from './LandingPage.module.css'
+import { Link } from "react-router-dom";
+import { AppLayout } from "../components/layout/AppLayout.jsx";
+import { Button } from "../components/ui/Button.jsx";
+import styles from "./LandingPage.module.css";
+import { useAuth } from "../context/AuthContext.jsx";
 
 // Landing page is the \"front door\" of the app.
 // It does not contain business logic, it just
 // explains what the app does and sends users
 // to Sign up / Sign in / Products.
 export function LandingPage() {
+  const { isSignedIn } = useAuth();
   return (
     <AppLayout>
       <section className={styles.root}>
         <div>
           <h1 className={styles.heroTitle}>
-            Your <span className={styles.highlight}>makeup</span> &amp;{' '}
-            <span className={styles.highlight}>skincare</span> cart, in one cute place.
+            Your <span className={styles.highlight}>makeup</span> &amp;{" "}
+            <span className={styles.highlight}>skincare</span> cart, in one cute
+            place.
           </h1>
           <p className={styles.heroText}>
             Glow Cart is an app where you can explore makeup, skincare and girly
             accessories. Sign up, build wishlists and shop items.
           </p>
           <div className={styles.heroActions}>
-            <Link to="/signup">
-              <Button>Create your glow account</Button>
-            </Link>
+            {!isSignedIn && (
+              <Link to="/signup">
+                <Button>Create your glow account</Button>
+              </Link>
+            )}
             <Link to="/products" className={styles.secondaryLink}>
-              or browse products first →
+              {isSignedIn ? "" : "or "}
+              browse products first →
             </Link>
           </div>
         </div>
@@ -44,8 +50,7 @@ export function LandingPage() {
         </aside>
       </section>
     </AppLayout>
-  )
+  );
 }
 
-export default LandingPage
-
+export default LandingPage;
