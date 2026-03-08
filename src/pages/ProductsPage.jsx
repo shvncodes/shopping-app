@@ -2,12 +2,31 @@ import { useEffect, useState } from "react";
 import { AppLayout } from "../components/layout/AppLayout.jsx";
 import { ProductGrid } from "../components/products/ProductGrid.jsx";
 import { EmptyState } from "../components/ui/EmptyState.jsx";
-import { products, getFilteredProducts } from "../data/products.js";
+import { getFilteredProducts } from "../data/products.js";
 import { useCart } from "../context/CartContext.jsx";
 import { useWishlist } from "../context/WishlistContext.jsx";
 import styles from "./ProductsPage.module.css";
 import { useSearchParams } from "react-router-dom";
 import Button from "../components/ui/Button.jsx";
+
+const CATEGORIES = [
+  {
+    key: "all",
+    label: "All",
+  },
+  {
+    key: "makeup",
+    label: "Makeup",
+  },
+  {
+    key: "skincare",
+    label: "Skincare",
+  },
+  {
+    key: "accessories",
+    label: "Accessories",
+  },
+];
 
 // Products page: shows all product types and items.
 // This component stays small by delegating the grid and
@@ -72,50 +91,22 @@ export function ProductsPage() {
             </form>
           </div>
           <div className={styles.filters}>
-            <button
-              type="button"
-              className={`${styles.filterPill} ${
-                categoryFilter === "all" ? styles.filterPillActive : ""
-              }`}
-              onClick={() => {
-                setCategoryQueryParams("all");
-              }}
-            >
-              All
-            </button>
-            <button
-              type="button"
-              className={`${styles.filterPill} ${
-                categoryFilter === "makeup" ? styles.filterPillActive : ""
-              }`}
-              onClick={() => {
-                setCategoryQueryParams("makeup");
-              }}
-            >
-              Makeup
-            </button>
-            <button
-              type="button"
-              className={`${styles.filterPill} ${
-                categoryFilter === "skincare" ? styles.filterPillActive : ""
-              }`}
-              onClick={() => {
-                setCategoryQueryParams("skincare");
-              }}
-            >
-              Skincare
-            </button>
-            <button
-              type="button"
-              className={`${styles.filterPill} ${
-                categoryFilter === "accessories" ? styles.filterPillActive : ""
-              }`}
-              onClick={() => {
-                setCategoryQueryParams("accessories");
-              }}
-            >
-              Accessories
-            </button>
+            {CATEGORIES.map((cat) => {
+              return (
+                <button
+                  key={cat.key}
+                  type="button"
+                  className={`${styles.filterPill} ${
+                    categoryFilter === cat.key ? styles.filterPillActive : ""
+                  }`}
+                  onClick={() => {
+                    setCategoryQueryParams(cat.key);
+                  }}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
