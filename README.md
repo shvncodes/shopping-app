@@ -15,6 +15,10 @@ Admin Case:
 
 - Remove the hardcoded Products, and Add support for adding new Products and only Admins can do CRUD operations on the products
 - Make an Admin UI (Store UI) - /admin/store
+- Only allow Admins to Add/Edit/Remove products
+  - If normal user goes to /admin route, redirect them to landing page of the app
+- Make a page where Admin can manage all the users - /admin/users
+- Make a page where Admin can create coupons (with title, description, expiry, % or fixed value discount)
 
 ---
 
@@ -22,5 +26,17 @@ Fixes and some features:
 
 - Enhance the UI and UX of the Header and its buttons
 - Enhance the landing page of the app, it looks empty (Ask ChatGPT for an sample UI, and implement that)
+  - Add a feature to show Popular products on the landing page
+  - Also show New Arrivals products on the landing page
+  - Also show Upcoming products on the landing page
 - Enhance the UI and UX of the Increase/Decrease Qty (use - and +)
 - Add random images from internet for products
+- Enhance Payment page UI and UX, add capabilty of applying coupons
+- Add a feature to allow users to add rating and reviews to products that they have purchased
+- Enhance Product details page (check flipkart product details page)
+  - Show reviews of each product on the product detail page
+  - Show ratings
+- Add a new page for user, where they can see
+  - their profile information and can also Edit their profile information (like name, email, phone, address)
+  - their order history
+  - their reviews
