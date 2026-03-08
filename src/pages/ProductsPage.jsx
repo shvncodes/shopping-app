@@ -33,12 +33,15 @@ const CATEGORIES = [
 // cards to dedicated components.
 export function ProductsPage() {
   // activeFilter lives in local component state.
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const { addToCart, items: cartItems } = useCart();
   const { addToWishlist, items: wishlistItems } = useWishlist();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [priceOrder, setPriceOrder] = useState("");
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const handleAddToCart = (productId) => {
     addToCart(productId, 1);
@@ -48,21 +51,32 @@ export function ProductsPage() {
     addToWishlist(productId);
   };
 
+  useEffect(() => {
+    const category = searchParams.get("category") || "all";
+    setCategoryFilter(category);
+
+    const search = searchParams.get("q") || "";
+    setSearchQuery(search);
+
+    const order = searchParams.get("sort") || "";
+    setPriceOrder(order);
+
+    setFilteredProducts(getFilteredProducts(category, search, order));
+  }, [searchParams]);
+
+  const handleSearchQuery = () => {
+    searchParams.set("q", searchQuery.trim());
+    setSearchParams(searchParams);
+  };
+
   const setCategoryQueryParams = (cat) => {
     searchParams.set("category", cat);
     setSearchParams(searchParams);
   };
 
-  useEffect(() => {
-    const category = searchParams.get("category");
-    const search = searchParams.get("q");
-    setCategoryFilter(category || "all");
-    setSearchQuery(search || "");
-    setFilteredProducts(getFilteredProducts(category || "all", search || ""));
-  }, [searchParams]);
-
-  const handleSearchQuery = (e) => {
-    setSearchQuery(e.target.value);
+  const handlePriceOrder = (e) => {
+    searchParams.set("sort", e.target.value);
+    setSearchParams(searchParams);
   };
 
   return (
@@ -73,8 +87,7 @@ export function ProductsPage() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                searchParams.set("q", searchQuery.trim());
-                setSearchParams(searchParams);
+                handleSearchQuery();
               }}
             >
               <input
@@ -83,7 +96,7 @@ export function ProductsPage() {
                 placeholder="Search products..."
                 className={styles.searchInput}
                 value={searchQuery}
-                onChange={handleSearchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <Button variant="secondary" size="small" type="submit">
                 Search
@@ -107,6 +120,18 @@ export function ProductsPage() {
                 </button>
               );
             })}
+          </div>
+          <div>
+            <select
+              name="priceSort"
+              value={priceOrder}
+              onChange={handlePriceOrder}
+              className={styles.sortPrice}
+            >
+              <option value="">Price</option>
+              <option value="desc">High to Low</option>
+              <option value="asc">Low to High</option>
+            </select>
           </div>
         </div>
 

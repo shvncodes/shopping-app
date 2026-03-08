@@ -61,3 +61,11 @@
 .searchInput:active {
   border: 1px solid var(--color-border-soft);
 }
+
+.sortPrice {
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  cursor: pointer;
+}

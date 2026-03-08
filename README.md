@@ -20,7 +20,6 @@ Admin Case:
 
 Fixes and some features:
 
-- Add capabilty of sorting based on price (Low to High and High to Low)
 - Enhance the UI and UX of the Header and its buttons
 - Enhance the landing page of the app, it looks empty (Ask ChatGPT for an sample UI, and implement that)
 - Enhance the UI and UX of the Increase/Decrease Qty (use - and +)

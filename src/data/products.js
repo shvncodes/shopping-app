@@ -90,7 +90,7 @@ export function getProductById(id) {
 }
 
 // Helper: get products based on user filter
-export function getFilteredProducts(category, searchQuery = "") {
+export function getFilteredProducts(category, searchQuery = "", priceOrder = "") {
   const categoryFilteredProducts = products.filter((product) => {
     if (category === "all" || category === "") return true;
     return category === product.category;
@@ -113,5 +113,14 @@ export function getFilteredProducts(category, searchQuery = "") {
     );
   });
 
-  return searchFilteredProducts;
+  if (priceOrder === "") return searchFilteredProducts;
+
+  const priceOrderFilteredProduct = searchFilteredProducts.sort(
+    (pro1, pro2) => {
+      if (priceOrder === "desc") return pro2.price - pro1.price;
+      return pro1.price - pro2.price;
+    },
+  );
+
+  return priceOrderFilteredProduct;
 }
