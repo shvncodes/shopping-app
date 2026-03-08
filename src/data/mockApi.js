@@ -2,7 +2,12 @@
 // Under the hood it just reads/writes from localStorage,
 // but the rest of the app can think about it like a service.
 
-import { STORAGE_KEYS, loadFromStorage, saveToStorage, removeFromStorage } from './storage.js';
+import {
+  STORAGE_KEYS,
+  loadFromStorage,
+  saveToStorage,
+  removeFromStorage,
+} from "./storage.js";
 
 // ---------- Users & auth ----------
 
@@ -18,7 +23,7 @@ export function createUser({ name, email, password }) {
   const users = getAllUsers();
   const existing = users.find((user) => user.email === email);
   if (existing) {
-    throw new Error('An account with this email already exists.');
+    throw new Error("An account with this email already exists.");
   }
 
   const newUser = {
@@ -26,7 +31,7 @@ export function createUser({ name, email, password }) {
     name,
     email,
     password,
-  }
+  };
   const updated = [...users, newUser];
   saveAllUsers(updated);
   setCurrentUser(newUser);
@@ -37,7 +42,7 @@ export function findUserByEmailAndPassword(email, password) {
   const users = getAllUsers();
   const user = users.find((u) => u.email === email && u.password === password);
   if (!user) {
-    throw new Error('Invalid email or password.');
+    throw new Error("Invalid email or password.");
   }
   setCurrentUser(user);
   return user;
@@ -57,6 +62,17 @@ export function setCurrentUser(user) {
 
 export function clearCurrentUser() {
   removeFromStorage(STORAGE_KEYS.CURRENT_USER);
+}
+
+// ---------- Products ---------
+
+export function loadProducts() {
+  return loadFromStorage(STORAGE_KEYS.PRODUCTS, []);
+}
+
+export function saveProduct(product) {
+  const products = loadFromStorage(STORAGE_KEYS.PRODUCTS, []);
+  saveToStorage(STORAGE_KEYS.PRODUCTS, [product, ...products]);
 }
 
 // ---------- Cart ----------
@@ -108,9 +124,8 @@ export function createOrder(userId, { items, total }) {
     createdAt: new Date().toISOString(),
     items,
     total,
-  }
+  };
   const updated = [...existing, newOrder];
   saveOrders(userId, updated);
   return newOrder;
 }
-
