@@ -43,3 +43,21 @@
   font-size: 0.9rem;
 }
 
+.search {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--spacing-xs);
+}
+
+.searchInput {
+  padding: var(--spacing-sm);
+  width: 20rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.searchInput:active {
+  border: 1px solid var(--color-border-soft);
+}
