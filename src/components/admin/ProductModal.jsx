@@ -24,6 +24,12 @@ export function ProductModal({ id, isShow = false, title, buttonText }) {
       price: Number(price),
       category: category.trim(),
     });
+    setName("");
+    setDescription("");
+    setBadge("");
+    setType("");
+    setPrice(0);
+    setCategory("");
   };
 
   return (
