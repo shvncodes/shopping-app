@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loadProducts, saveProduct } from "../data/mockApi";
+import { loadProducts, saveProduct, clearProducts } from "../data/mockApi";
 
 const ProductContext = createContext(null);
 
@@ -35,7 +35,10 @@ export function ProductProvider({ children }) {
   const removeProduct = (productId) => {
     const updateItems = items.filter((item) => item.id !== productId);
 
-    saveProduct(updateItems);
+    clearProducts();
+
+    for (const updatedItem of updateItems) saveProduct(updatedItem);
+
     setItems(updateItems);
   };
 

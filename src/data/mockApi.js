@@ -75,6 +75,10 @@ export function saveProduct(product) {
   saveToStorage(STORAGE_KEYS.PRODUCTS, [product, ...products]);
 }
 
+export function clearProducts() {
+  removeFromStorage(STORAGE_KEYS.PRODUCTS);
+}
+
 // ---------- Cart ----------
 
 export function loadCart(userId) {

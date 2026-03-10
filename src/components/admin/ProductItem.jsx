@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import { Button } from "../ui/Button.jsx";
+import { useProduct } from "../../context/ProductsContext.jsx";
 
 export function ProductItem({
   id,
@@ -10,6 +11,12 @@ export function ProductItem({
   price,
   category,
 }) {
+  const { removeProduct } = useProduct();
+
+  const handleDelete = (id) => {
+    removeProduct(id);
+  };
+
   return (
     <div>
       <div>
@@ -24,7 +31,7 @@ export function ProductItem({
         <Button variant="secondary" size="small">
           Edit
         </Button>
-        <Button variant="danger" size="small">
+        <Button variant="danger" size="small" onClick={() => handleDelete(id)}>
           Delete
         </Button>
       </div>

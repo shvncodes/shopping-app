@@ -16,6 +16,7 @@ export function ProductModal({ id, isShow = false, title, buttonText }) {
   const [category, setCategory] = useState("");
 
   const saveNewProduct = () => {
+    if (!name || !price) return;
     addProduct({
       name: name.trim(),
       description: description.trim(),
