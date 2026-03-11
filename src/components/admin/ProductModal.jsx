@@ -27,12 +27,7 @@ export function ProductModal({
   const [productPrice, setProductPrice] = useState(price);
   const [productCategory, setProductCategory] = useState(category);
 
-  const handlePrice = (value) => {
-    value < 0 ? setProductPrice(0) : setProductPrice(Number(value));
-  };
-
   const saveNewProduct = () => {
-    if (!productName || !productPrice) return;
     addProduct({
       name: productName.trim(),
       description: productDescription.trim(),
@@ -50,7 +45,6 @@ export function ProductModal({
   };
 
   const updateProduct = () => {
-    if (!productName || !productPrice) return;
     updateProducts({
       id,
       name: productName.trim(),
@@ -62,6 +56,15 @@ export function ProductModal({
     });
   };
 
+  const handlePrice = (value) => {
+    value < 0 ? setProductPrice(0) : setProductPrice(Number(value));
+  };
+
+  const validateProductDetails = () => {
+    if (!productName || !productPrice || !productCategory) return false;
+    return true;
+  };
+
   return (
     <div>
       <div>{title}</div>
@@ -69,6 +72,11 @@ export function ProductModal({
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            // TODO: Validate product details
+            const isValid = validateProductDetails();
+            if (!isValid) {
+              return;
+            }
             if (!isEditMode) saveNewProduct();
             else updateProduct();
             onClose();
@@ -78,6 +86,7 @@ export function ProductModal({
             <input
               type="text"
               placeholder="Product_name"
+              required
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
             />
@@ -103,6 +112,7 @@ export function ProductModal({
               type="number"
               placeholder="Product_price"
               value={productPrice}
+              required
               onChange={(e) => handlePrice(e.target.value)}
             />
             <select

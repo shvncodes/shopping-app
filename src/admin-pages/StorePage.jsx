@@ -1,12 +1,33 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button.jsx";
-import { useState } from "react";
 import { useProduct } from "../context/ProductsContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { ProductItem } from "../components/admin/ProductItem.jsx";
 import { ProductModal } from "../components/admin/ProductModal.jsx";
 
 export function StorePage() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const { items } = useProduct();
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isShow, setIsShow] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.email !== "admin@gmail.com") {
+      navigate("/");
+      return;
+    }
+    setIsLoading(false);
+  }, [user]);
+
+  if (isLoading) {
+    // TODO: Improve loading state
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
