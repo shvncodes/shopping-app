@@ -3,34 +3,63 @@ import { useState } from "react";
 import { Button } from "../ui/Button.jsx";
 import { useProduct } from "../../context/ProductsContext.jsx";
 
-export function ProductModal({ id, isShow = false, title, buttonText }) {
+export function ProductModal({
+  id,
+  isShow = false,
+  title,
+  buttonText,
+  name = "",
+  description = "",
+  badge = "",
+  type = "",
+  price = 0,
+  category = "",
+  onClose,
+}) {
   if (!isShow) return null;
   const isEditMode = Boolean(id);
-  const { addProduct } = useProduct();
+  const { addProduct, updateProducts } = useProduct();
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [badge, setBadge] = useState("");
-  const [type, setType] = useState("");
-  const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState("");
+  const [productName, setProductName] = useState(name);
+  const [productDescription, setProductDescription] = useState(description);
+  const [productBadge, setProductBadge] = useState(badge);
+  const [productType, setProductType] = useState(type);
+  const [productPrice, setProductPrice] = useState(price);
+  const [productCategory, setProductCategory] = useState(category);
+
+  const handlePrice = (value) => {
+    value < 0 ? setProductPrice(0) : setProductPrice(Number(value));
+  };
 
   const saveNewProduct = () => {
-    if (!name || !price) return;
+    if (!productName || !productPrice) return;
     addProduct({
-      name: name.trim(),
-      description: description.trim(),
-      badge: badge.trim(),
-      type: type.trim(),
-      price: Number(price),
-      category: category.trim(),
+      name: productName.trim(),
+      description: productDescription.trim(),
+      badge: productBadge.trim(),
+      type: productType.trim(),
+      price: Number(productPrice),
+      category: productCategory.trim(),
     });
-    setName("");
-    setDescription("");
-    setBadge("");
-    setType("");
-    setPrice(0);
-    setCategory("");
+    setProductName("");
+    setProductDescription("");
+    setProductBadge("");
+    setProductType("");
+    setProductPrice(0);
+    setProductCategory("");
+  };
+
+  const updateProduct = () => {
+    if (!productName || !productPrice) return;
+    updateProducts({
+      id,
+      name: productName.trim(),
+      description: productDescription.trim(),
+      badge: productBadge.trim(),
+      type: productType.trim(),
+      price: Number(productPrice),
+      category: productCategory.trim(),
+    });
   };
 
   return (
@@ -41,43 +70,45 @@ export function ProductModal({ id, isShow = false, title, buttonText }) {
           onSubmit={(e) => {
             e.preventDefault();
             if (!isEditMode) saveNewProduct();
+            else updateProduct();
+            onClose();
           }}
         >
           <div>
             <input
               type="text"
               placeholder="Product_name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
             />
             <input
               type="textarea"
               placeholder="Product_description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={productDescription}
+              onChange={(e) => setProductDescription(e.target.value)}
             />
             <input
               type="text"
               placeholder="Product_badge"
-              value={badge}
-              onChange={(e) => setBadge(e.target.value)}
+              value={productBadge}
+              onChange={(e) => setProductBadge(e.target.value)}
             />
             <input
               type="text"
               placeholder="Product_type"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+              value={productType}
+              onChange={(e) => setProductType(e.target.value)}
             />
             <input
               type="number"
               placeholder="Product_price"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              value={productPrice}
+              onChange={(e) => handlePrice(e.target.value)}
             />
             <select
               name="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={productCategory}
+              onChange={(e) => setProductCategory(e.target.value)}
             >
               <option value="all">All</option>
               <option value="skincare">Skincare</option>
@@ -100,4 +131,11 @@ ProductModal.propTypes = {
   buttonText: PropTypes.string,
   isNewProduct: PropTypes.bool,
   isEdit: PropTypes.bool,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  badge: PropTypes.string,
+  type: PropTypes.string,
+  price: PropTypes.number,
+  category: PropTypes.string,
+  onClose: PropTypes.func,
 };

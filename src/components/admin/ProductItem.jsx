@@ -1,6 +1,8 @@
 import { PropTypes } from "prop-types";
+import { useState } from "react";
 import { Button } from "../ui/Button.jsx";
 import { useProduct } from "../../context/ProductsContext.jsx";
+import { ProductModal } from "./ProductModal.jsx";
 
 export function ProductItem({
   id,
@@ -12,6 +14,7 @@ export function ProductItem({
   category,
 }) {
   const { removeProduct } = useProduct();
+  const [isShow, setIsShow] = useState(false);
 
   const handleDelete = (id) => {
     removeProduct(id);
@@ -28,13 +31,35 @@ export function ProductItem({
         <p>{category}</p>
       </div>
       <div>
-        <Button variant="secondary" size="small">
+        <Button
+          variant="secondary"
+          size="small"
+          onClick={() => {
+            setIsShow(true);
+          }}
+        >
           Edit
         </Button>
         <Button variant="danger" size="small" onClick={() => handleDelete(id)}>
           Delete
         </Button>
       </div>
+
+      <ProductModal
+        isShow={isShow}
+        title="Edit Product"
+        buttonText="Update"
+        id={id}
+        name={name}
+        description={description}
+        badge={badge}
+        type={type}
+        price={price}
+        category={category}
+        onClose={() => {
+          setIsShow(false);
+        }}
+      />
     </div>
   );
 }

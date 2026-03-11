@@ -39,7 +39,14 @@ export function StorePage() {
         })}
       </div>
 
-      <ProductModal isShow={isShow} title="Add New Product" buttonText="Save" />
+      <ProductModal
+        isShow={isShow}
+        title="Add New Product"
+        buttonText="Save"
+        onClose={() => {
+          setIsShow(false);
+        }}
+      />
     </div>
   );
 }

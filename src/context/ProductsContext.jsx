@@ -36,9 +36,7 @@ export function ProductProvider({ children }) {
     const updateItems = items.filter((item) => item.id !== productId);
 
     clearProducts();
-
     for (const updatedItem of updateItems) saveProduct(updatedItem);
-
     setItems(updateItems);
   };
 
@@ -65,7 +63,9 @@ export function ProductProvider({ children }) {
     });
 
     setItems(updateProduct);
-    saveProduct(updateProduct);
+
+    clearProducts();
+    for (const updatedItem of updateProduct) saveProduct(updatedItem);
   };
 
   const value = {
