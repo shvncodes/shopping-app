@@ -1,0 +1,40 @@
+.productItem {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.productInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.productInfo p {
+  margin: 0;
+}
+
+.productName {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.productPrice,
+.productCategory,
+.productDescription,
+.productBadge,
+.productType {
+  font-size: 0.8rem;
+}
+
+.productActions {
+  display: flex;
+  gap: var(--spacing-sm);
+}

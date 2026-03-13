@@ -5,6 +5,7 @@ import { useProduct } from "../context/ProductsContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { ProductItem } from "../components/admin/ProductItem.jsx";
 import { ProductModal } from "../components/admin/ProductModal.jsx";
+import styles from "./StorePage.module.css";
 
 export function StorePage() {
   const navigate = useNavigate();
@@ -30,9 +31,9 @@ export function StorePage() {
   }
 
   return (
-    <div>
-      <div>
-        <h1>Store Page</h1>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Product List</h1>
         <Button
           variant="secondary"
           size="small"
@@ -43,7 +44,7 @@ export function StorePage() {
           Add New Product
         </Button>
       </div>
-      <div>
+      <div className={styles.products}>
         {items.map((item) => {
           return (
             <ProductItem

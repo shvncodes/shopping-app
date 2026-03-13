@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "../ui/Button.jsx";
 import { useProduct } from "../../context/ProductsContext.jsx";
 import { ProductModal } from "./ProductModal.jsx";
+import styles from "./ProductItem.module.css";
 
 export function ProductItem({
   id,
@@ -21,16 +22,16 @@ export function ProductItem({
   };
 
   return (
-    <div>
-      <div>
-        <h2>{name}</h2>
-        <p>{description}</p>
-        <p>{badge}</p>
-        <p>{type}</p>
-        <p>{price}</p>
-        <p>{category}</p>
+    <div className={styles.productItem}>
+      <div className={styles.productInfo}>
+        <p className={styles.productName}>{name}</p>
+        <p className={styles.productPrice}>₹{price}</p>
+        <p className={styles.productCategory}>{category}</p>
+        <p className={styles.productDescription}>{description}</p>
+        <p className={styles.productBadge}>{badge}</p>
+        <p className={styles.productType}>{type}</p>
       </div>
-      <div>
+      <div className={styles.productActions}>
         <Button
           variant="secondary"
           size="small"
