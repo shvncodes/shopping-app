@@ -63,7 +63,7 @@ export function ProductsPage() {
     setPriceOrder(order);
 
     setFilteredProducts(getFilteredProducts(category, search, order));
-  }, [searchParams]);
+  }, [searchParams, getFilteredProducts]);
 
   const handleSearchQuery = () => {
     searchParams.set("q", searchQuery.trim());

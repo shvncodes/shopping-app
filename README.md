@@ -13,7 +13,7 @@ User Case:
 
 Admin Case:
 
-- Remove the hardcoded Products, and Add support for adding new Products and only Admins can do CRUD operations on the products
+- Only Admins can do CRUD operations on the products
 - Make an Admin UI (Store UI) - /admin/store
   - If normal user goes to /admin route, redirect them to landing page of the app
 - Make a page where Admin can manage all the users - /admin/users
