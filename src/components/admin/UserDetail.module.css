@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.name,
+.email {
+  margin: 0;
+  padding: var(--spacing-sm);
+  font-weight: 500;
+}
+
+.userEmail {
+  padding: var(--spacing-sm) 0;
+  font-weight: 400;
+}
+
+.buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}

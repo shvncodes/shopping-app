@@ -19,7 +19,7 @@ export function saveAllUsers(users) {
   saveToStorage(STORAGE_KEYS.USERS, users);
 }
 
-export function createUser({ name, email, password }) {
+export function createUser({ name, email, age, gender, password, isBlocked }) {
   const users = getAllUsers();
   const existing = users.find((user) => user.email === email);
   if (existing) {
@@ -30,7 +30,10 @@ export function createUser({ name, email, password }) {
     id: String(Date.now()),
     name,
     email,
+    age,
+    gender,
     password,
+    isBlocked,
   };
   const updated = [...users, newUser];
   saveAllUsers(updated);
@@ -46,6 +49,43 @@ export function findUserByEmailAndPassword(email, password) {
   }
   setCurrentUser(user);
   return user;
+}
+
+export function updateUser(user) {
+  const users = loadFromStorage(STORAGE_KEYS.USERS, []);
+  const updatedUser = users.map((u) => {
+    if (user.id !== u.id) return u;
+    return {
+      ...u,
+      name: user.name.trim(),
+      age: user.age,
+      gender: user.gender,
+      password: user.password,
+    };
+  });
+
+  saveToStorage(STORAGE_KEYS.USERS, updatedUser);
+  return updatedUser;
+}
+
+export function blockUser(userId) {
+  const users = loadFromStorage(STORAGE_KEYS.USERS, []);
+  const updatedUsers = users.map((u) => {
+    if (userId !== u.id) return u;
+    return {
+      ...u,
+      isBlocked: !u.isBlocked,
+    };
+  });
+  saveToStorage(STORAGE_KEYS.USERS, updatedUsers);
+  return updatedUsers;
+}
+
+export function deleteUser(userId) {
+  const users = loadFromStorage(STORAGE_KEYS.USERS, []);
+  const updatedUsers = users.filter((u) => u.id !== userId);
+  saveToStorage(STORAGE_KEYS.USERS, updatedUsers);
+  return updatedUsers;
 }
 
 export function getCurrentUser() {
@@ -73,6 +113,23 @@ export function loadProducts() {
 export function saveProduct(product) {
   const products = loadFromStorage(STORAGE_KEYS.PRODUCTS, []);
   saveToStorage(STORAGE_KEYS.PRODUCTS, [product, ...products]);
+}
+
+export function updateProduct(product) {
+  const products = loadFromStorage(STORAGE_KEYS.PRODUCTS, []);
+  const updatedProducts = products.map((item) => {
+    if (item.id !== product.id) return item;
+    return {
+      ...item,
+      name: product.name.trim(),
+      description: product.description.trim(),
+      badge: product.badge.trim(),
+      type: product.type.trim(),
+      price: product.price,
+      category: product.category.trim(),
+    };
+  });
+  saveToStorage(STORAGE_KEYS.PRODUCTS, updatedProducts);
 }
 
 export function clearProducts() {

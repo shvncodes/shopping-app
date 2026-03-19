@@ -5,7 +5,12 @@ import {
   useState,
   useCallback,
 } from "react";
-import { loadProducts, saveProduct, clearProducts } from "../data/mockApi";
+import {
+  loadProducts,
+  saveProduct,
+  updateProduct,
+  clearProducts,
+} from "../data/mockApi";
 
 const ProductContext = createContext(null);
 
@@ -55,23 +60,17 @@ export function ProductProvider({ children }) {
     price,
     category,
   }) => {
-    const updateProduct = items.map((item) => {
-      if (item.id !== id) return item;
-      return {
-        ...item,
-        name: name.trim(),
-        description: description.trim(),
-        badge: badge.trim(),
-        type: type.trim(),
-        price: price,
-        category: category.trim(),
-      };
+    updateProduct({
+      id,
+      name,
+      description,
+      badge,
+      type,
+      price,
+      category,
     });
-
-    setItems(updateProduct);
-
-    clearProducts();
-    for (const updatedItem of updateProduct) saveProduct(updatedItem);
+    const updatedProducts = loadProducts();
+    setItems(updatedProducts);
   };
 
   const getProductById = useCallback(
