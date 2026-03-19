@@ -27,6 +27,12 @@
   box-shadow: var(--shadow-soft);
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .title {
   margin: 0;
   text-align: center;
@@ -81,4 +87,9 @@
 .price,
 .category :focus {
   outline: none;
+}
+
+.errorMessage {
+  font-size: 0.7rem;
+  color: var(--color-error);
 }

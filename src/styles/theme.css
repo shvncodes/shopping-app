@@ -24,6 +24,9 @@
   --color-border-soft: #f2c4e0;
   --shadow-soft: 0 8px 20px rgba(255, 138, 201, 0.18);
 
+  /* Error color */
+  --color-error: #ef0a0e;
+
   /* Other helpers */
   --radius-lg: 18px;
   --radius-md: 12px;
@@ -35,4 +38,3 @@
   --spacing-lg: 1rem;
   --spacing-xl: 1.5rem;
 }
-

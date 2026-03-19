@@ -68,6 +68,12 @@ export function ProductModal({
   const [productType, setProductType] = useState(type);
   const [productPrice, setProductPrice] = useState(price);
   const [productCategory, setProductCategory] = useState(category);
+  const [errorMessage, setErrorMessage] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+  });
 
   const saveNewProduct = () => {
     addProduct({
@@ -98,20 +104,27 @@ export function ProductModal({
     });
   };
 
-  const handlePrice = (value) => {
-    value < 0 ? setProductPrice(0) : setProductPrice(Number(value));
-  };
-
   const validateProductDetails = () => {
-    if (
-      !productName ||
-      !productDescription ||
-      !productPrice ||
-      !productCategory ||
-      !productBadge ||
-      !productType
-    ) {
-      alert("Please fill in all fields.");
+    if (!productName) {
+      setErrorMessage({ ...errorMessage, name: "Please enter product name" });
+      return false;
+    }
+    if (!productDescription) {
+      setErrorMessage({
+        ...errorMessage,
+        description: "Please enter product description",
+      });
+      return false;
+    }
+    if (!productPrice) {
+      setErrorMessage({ ...errorMessage, price: "Please enter product price" });
+      return false;
+    }
+    if (!productCategory) {
+      setErrorMessage({
+        ...errorMessage,
+        category: "Please select product category",
+      });
       return false;
     }
 
@@ -121,7 +134,12 @@ export function ProductModal({
   return (
     <div className={styles.modal}>
       <div className={styles.container}>
-        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.header}>
+          <h2 className={styles.title}>{title}</h2>
+          <Button variant="danger" size="small" onClick={() => onClose()}>
+            X
+          </Button>
+        </div>
         <div className={styles.content}>
           <form
             className={styles.form}
@@ -144,10 +162,15 @@ export function ProductModal({
                 label="Name"
                 type="text"
                 placeholder="Product_name"
-                required
                 value={productName}
-                onChange={(e) => setProductName(e.target.value)}
+                onChange={(e) => {
+                  setProductName(e.target.value);
+                  setErrorMessage({ ...errorMessage, name: "" });
+                }}
               />
+              {errorMessage.name?.trim() && (
+                <span className={styles.errorMessage}>{errorMessage.name}</span>
+              )}
             </label>
             <label htmlFor="description" className={styles.descriptionLabel}>
               Description
@@ -157,10 +180,17 @@ export function ProductModal({
                 label="Description"
                 type="textarea"
                 placeholder="Product_description"
-                required
                 value={productDescription}
-                onChange={(e) => setProductDescription(e.target.value)}
+                onChange={(e) => {
+                  setProductDescription(e.target.value);
+                  setErrorMessage({ ...errorMessage, description: "" });
+                }}
               />
+              {errorMessage.description?.trim() && (
+                <span className={styles.errorMessage}>
+                  {errorMessage.description}
+                </span>
+              )}
             </label>
             <label htmlFor="badge" className={styles.badgeLabel}>
               Badge
@@ -207,9 +237,17 @@ export function ProductModal({
                 type="number"
                 placeholder="Product_price"
                 value={productPrice}
-                required
-                onChange={(e) => handlePrice(e.target.value)}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  value < 0 ? setProductPrice(0) : setProductPrice(value);
+                  setErrorMessage({ ...errorMessage, price: "" });
+                }}
               />
+              {errorMessage.price?.trim() && (
+                <span className={styles.errorMessage}>
+                  {errorMessage.price}
+                </span>
+              )}
             </label>
             <label htmlFor="category" className={styles.categoryLabel}>
               Category
@@ -219,8 +257,10 @@ export function ProductModal({
                 label="Category"
                 name="category"
                 value={productCategory}
-                required
-                onChange={(e) => setProductCategory(e.target.value)}
+                onChange={(e) => {
+                  setProductCategory(e.target.value);
+                  setErrorMessage({ ...errorMessage, category: "" });
+                }}
               >
                 {productCategories.map((category) => (
                   <option key={category} value={category}>
@@ -228,6 +268,11 @@ export function ProductModal({
                   </option>
                 ))}
               </select>
+              {errorMessage.category?.trim() && (
+                <span className={styles.errorMessage}>
+                  {errorMessage.category}
+                </span>
+              )}
             </label>
             <Button type="submit" fullWidth={true}>
               {buttonText}
