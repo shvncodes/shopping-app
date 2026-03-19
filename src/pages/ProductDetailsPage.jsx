@@ -1,14 +1,15 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { AppLayout } from '../components/layout/AppLayout.jsx';
-import { Button } from '../components/ui/Button.jsx';
-import { getProductById } from '../data/products.js';
-import { useCart } from '../context/CartContext.jsx';
-import { useWishlist } from '../context/WishlistContext.jsx';
-import styles from './ProductDetailsPage.module.css';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useNavigate, useParams } from "react-router-dom";
+import { AppLayout } from "../components/layout/AppLayout.jsx";
+import { Button } from "../components/ui/Button.jsx";
+import { useProduct } from "../context/ProductsContext.jsx";
+import { useCart } from "../context/CartContext.jsx";
+import { useWishlist } from "../context/WishlistContext.jsx";
+import styles from "./ProductDetailsPage.module.css";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export function ProductDetailsPage() {
   // useParams lets us read the dynamic part of the URL, e.g. /products/123.
+  const { getProductById } = useProduct();
   const { isSignedIn } = useAuth();
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -20,27 +21,30 @@ export function ProductDetailsPage() {
   if (!product) {
     return (
       <AppLayout>
-        <p>We could not find this product. It might have been removed from our sample data.</p>
+        <p>
+          We could not find this product. It might have been removed from our
+          sample data.
+        </p>
       </AppLayout>
     );
   }
 
   const handleAddToCart = () => {
     addToCart(product.id, 1);
-  }
+  };
 
   const handleAddToWishlist = () => {
     addToWishlist(product.id);
-  }
+  };
 
   const handleBuyNow = () => {
     if (!isSignedIn) {
-      navigate('/signin');
+      navigate("/signin");
       return;
     }
     addToCart(product.id, 1);
-    navigate('/checkout');
-  }
+    navigate("/checkout");
+  };
 
   return (
     <AppLayout>
@@ -63,7 +67,7 @@ export function ProductDetailsPage() {
         </div>
       </section>
     </AppLayout>
-  )
+  );
 }
 
 export default ProductDetailsPage;

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { loadCart, saveCart } from "../data/mockApi.js";
-import { getProductById } from "../data/products.js";
+import { useProduct } from "./ProductsContext.jsx";
 import { useAuth } from "./AuthContext.jsx";
 
 // CartContext manages items the user intends to buy.
@@ -8,6 +8,8 @@ import { useAuth } from "./AuthContext.jsx";
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
+  const { getProductById } = useProduct();
+
   const { isSignedIn, user } = useAuth();
 
   const [items, setItems] = useState([]);
@@ -15,7 +17,7 @@ export function CartProvider({ children }) {
   // Load initial cart from localStorage.
   useEffect(() => {
     if (!isSignedIn) {
-      setItems([])
+      setItems([]);
       return;
     }
 
@@ -31,7 +33,7 @@ export function CartProvider({ children }) {
 
     const existingItem = items.find((item) => {
       return item.productId === productId;
-    })
+    });
 
     if (existingItem) {
       updatedCartItems = items.map((item) => {
@@ -39,14 +41,14 @@ export function CartProvider({ children }) {
           return { ...item, quantity: item.quantity + quantity };
         }
         return item;
-      })
+      });
     } else {
       updatedCartItems = [...items, { productId, quantity }];
     }
 
     setItems(updatedCartItems);
     saveCart(user.id, updatedCartItems);
-  }
+  };
 
   const removeFromCart = (productId) => {
     if (!isSignedIn) {
@@ -60,7 +62,7 @@ export function CartProvider({ children }) {
 
     setItems(updatedCartItems);
     saveCart(user.id, updatedCartItems);
-  }
+  };
 
   const updateQuantity = (productId, quantity) => {
     if (!isSignedIn) {
@@ -71,15 +73,15 @@ export function CartProvider({ children }) {
       if (item.productId === productId) {
         return {
           ...item,
-          quantity: quantity
-        }
+          quantity: quantity,
+        };
       }
       return item;
     });
 
     setItems(updatedCartItems);
     saveCart(user.id, updatedCartItems);
-  }
+  };
 
   const clearCart = () => {
     setItems([]);
@@ -93,7 +95,7 @@ export function CartProvider({ children }) {
 
     for (const item of items) {
       const product = getProductById(item.productId);
-      totalPrice += (product.price * item.quantity);
+      totalPrice += product.price * item.quantity;
       totalProductCount += item.quantity;
     }
 

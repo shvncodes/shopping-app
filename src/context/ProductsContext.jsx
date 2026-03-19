@@ -68,11 +68,55 @@ export function ProductProvider({ children }) {
     for (const updatedItem of updateProduct) saveProduct(updatedItem);
   };
 
+  function getProductById(id) {
+    return items.find((product) => product.id === id) || null;
+  }
+
+  // Helper: get products based on user filter
+  function getFilteredProducts(category, searchQuery = "", priceOrder = "") {
+    const categoryFilteredProducts = items.filter((product) => {
+      if (category === "all" || category === "") return true;
+      return category === product.category;
+    });
+
+    const q = searchQuery.toLowerCase().trim();
+
+    const searchFilteredProducts = categoryFilteredProducts.filter(
+      (product) => {
+        const name = product.name.toLocaleLowerCase();
+        const desc = product.description.toLowerCase();
+        const type = product.type.toLowerCase();
+        const badge = product.badge.toLocaleLowerCase();
+        const category = product.category.toLocaleLowerCase();
+        return (
+          name.includes(q) ||
+          desc.includes(q) ||
+          type.includes(q) ||
+          badge.includes(q) ||
+          category.includes(q)
+        );
+      },
+    );
+
+    if (priceOrder === "") return searchFilteredProducts;
+
+    const priceOrderFilteredProduct = searchFilteredProducts.sort(
+      (pro1, pro2) => {
+        if (priceOrder === "desc") return pro2.price - pro1.price;
+        return pro1.price - pro2.price;
+      },
+    );
+
+    return priceOrderFilteredProduct;
+  }
+
   const value = {
     items,
     addProduct,
     removeProduct,
     updateProducts,
+    getProductById,
+    getFilteredProducts,
   };
 
   return (

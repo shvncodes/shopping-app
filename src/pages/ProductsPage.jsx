@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AppLayout } from "../components/layout/AppLayout.jsx";
 import { ProductGrid } from "../components/products/ProductGrid.jsx";
 import { EmptyState } from "../components/ui/EmptyState.jsx";
-import { getFilteredProducts } from "../data/products.js";
+import { useProduct } from "../context/ProductsContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import { useWishlist } from "../context/WishlistContext.jsx";
 import styles from "./ProductsPage.module.css";
@@ -11,19 +11,19 @@ import Button from "../components/ui/Button.jsx";
 
 const CATEGORIES = [
   {
-    key: "all",
+    key: "All",
     label: "All",
   },
   {
-    key: "makeup",
+    key: "Makeup",
     label: "Makeup",
   },
   {
-    key: "skincare",
+    key: "Skincare",
     label: "Skincare",
   },
   {
-    key: "accessories",
+    key: "Accessories",
     label: "Accessories",
   },
 ];
@@ -33,6 +33,7 @@ const CATEGORIES = [
 // cards to dedicated components.
 export function ProductsPage() {
   // activeFilter lives in local component state.
+  const { getFilteredProducts } = useProduct();
   const { addToCart, items: cartItems } = useCart();
   const { addToWishlist, items: wishlistItems } = useWishlist();
   const [searchParams, setSearchParams] = useSearchParams();

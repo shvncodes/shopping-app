@@ -1,16 +1,17 @@
-import { useParams } from 'react-router-dom';
-import { AppLayout } from '../components/layout/AppLayout.jsx';
-import { Card } from '../components/ui/Card.jsx';
-import { EmptyState } from '../components/ui/EmptyState.jsx';
-import { useOrders } from '../context/OrdersContext.jsx';
-import { getProductById } from '../data/products.js';
-import styles from './OrderDetailsPage.module.css';
+import { useParams } from "react-router-dom";
+import { AppLayout } from "../components/layout/AppLayout.jsx";
+import { Card } from "../components/ui/Card.jsx";
+import { EmptyState } from "../components/ui/EmptyState.jsx";
+import { useOrders } from "../context/OrdersContext.jsx";
+import { useProduct } from "../context/ProductsContext.jsx";
+import styles from "./OrderDetailsPage.module.css";
 
 // Detailed view for a single order.
 export function OrderDetailsPage() {
   const { orderId } = useParams();
+  const { getProductById } = useProduct();
 
-  const { getOrderById } = useOrders()
+  const { getOrderById } = useOrders();
   const order = getOrderById(orderId);
 
   if (!order) {
@@ -20,7 +21,7 @@ export function OrderDetailsPage() {
           title="Order not found"
           description="This order id does not exist in localStorage."
           actionLabel="Back to orders"
-          onAction={() => (window.location.href = '/orders')}
+          onAction={() => (window.location.href = "/orders")}
         />
       </AppLayout>
     );
@@ -46,7 +47,8 @@ export function OrderDetailsPage() {
         <Card>
           {withProducts.map((line) => (
             <p key={line.product.id} className={styles.placeholder}>
-              {line.product.name} × {line.quantity} — ₹ {line.product.price * line.quantity}
+              {line.product.name} × {line.quantity} — ₹{" "}
+              {line.product.price * line.quantity}
             </p>
           ))}
           <p className={styles.placeholder}>
