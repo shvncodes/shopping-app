@@ -13,7 +13,11 @@ import { CheckoutPage } from "./pages/CheckoutPage.jsx";
 import { OrderConfirmationPage } from "./pages/OrderConfirmationPage.jsx";
 import { OrdersPage } from "./pages/OrdersPage.jsx";
 import { OrderDetailsPage } from "./pages/OrderDetailsPage.jsx";
+
+import { AdminPage } from "./admin-pages/AdminPage.jsx";
 import { StorePage } from "./admin-pages/StorePage.jsx";
+import { CouponPage } from "./admin-pages/CouponPage.jsx";
+import { UserPage } from "./admin-pages/Userpage.jsx";
 
 // App defines the overall layout and routing for the app.
 // Pages are kept in src/pages, and we use React Router's
@@ -38,7 +42,10 @@ function App() {
           element={<OrderConfirmationPage />}
         />
         {/* Admin routes */}
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/store" element={<StorePage />} />
+        <Route path="/admin/users" element={<UserPage />} />
+        <Route path="/admin/coupons" element={<CouponPage />} />
 
         {/* If the user hits an unknown URL, gently redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
