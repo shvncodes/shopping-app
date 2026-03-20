@@ -47,17 +47,22 @@ export function findUserByEmailAndPassword(email, password) {
   if (!user) {
     throw new Error("Invalid email or password.");
   }
+  if (user.isBlocked) {
+    throw new Error("This account has been blocked.");
+  }
   setCurrentUser(user);
   return user;
 }
 
 export function updateUser(user) {
+  console.log(user);
   const users = loadFromStorage(STORAGE_KEYS.USERS, []);
   const updatedUser = users.map((u) => {
     if (user.id !== u.id) return u;
     return {
       ...u,
       name: user.name.trim(),
+      email: user.email.trim(),
       age: user.age,
       gender: user.gender,
       password: user.password,

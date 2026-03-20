@@ -13,12 +13,9 @@ User Case:
 
 Admin Case:
 
-- Make an Admin UI (Store UI) - /admin/store
-  - If normal user goes to /admin route, redirect them to landing page of the app
-- Make a admin page - /admin
-  - to go to Store Page, User Page, Coupon Page
-- Make a page where Admin can manage all the users - /admin/users
-- Make a page where Admin can create coupons (with title, description, expiry, % or fixed value discount)
+- If normal user goes to /admin route, redirect them to landing page of the app
+- Make a page where Admin can create coupons - /admin/coupons
+  - (with title, description, expiry, % or fixed value discount)
 
 ---
 

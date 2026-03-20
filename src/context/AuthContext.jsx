@@ -54,10 +54,11 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  const updateUserDetails = (id, name, age, gender, password) => {
+  const updateUserDetails = ({ id, name, email, age, gender, password }) => {
     const updatedUser = {
       id,
       name,
+      email,
       age,
       gender,
       password,

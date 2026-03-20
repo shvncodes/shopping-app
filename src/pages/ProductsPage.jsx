@@ -53,7 +53,7 @@ export function ProductsPage() {
   };
 
   useEffect(() => {
-    const category = searchParams.get("category") || "all";
+    const category = searchParams.get("category") || "All";
     setCategoryFilter(category);
 
     const search = searchParams.get("q") || "";

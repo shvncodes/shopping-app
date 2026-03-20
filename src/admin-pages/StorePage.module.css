@@ -1,5 +1,5 @@
 .container {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
 }
 
 .header {
