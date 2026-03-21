@@ -16,6 +16,7 @@ Admin Case:
 - If normal user goes to /admin route, redirect them to landing page of the app
 - Make a page where Admin can create coupons - /admin/coupons
   - (with title, description, expiry, % or fixed value discount)
+- If logged in user is admin, then show admin dashboard on the header, and if not then show normal header.
 
 ---
 
