@@ -141,6 +141,40 @@ export function clearProducts() {
   removeFromStorage(STORAGE_KEYS.PRODUCTS);
 }
 
+// ---------- Coupons ----------
+
+export function loadCoupons() {
+  return loadFromStorage(STORAGE_KEYS.COUPONS, []);
+}
+
+export function saveCoupon(coupon) {
+  const coupons = loadFromStorage(STORAGE_KEYS.COUPONS, []);
+  saveToStorage(STORAGE_KEYS.COUPONS, [coupon, ...coupons]);
+}
+
+export function updateCoupon(coupon) {
+  const coupons = loadFromStorage(STORAGE_KEYS.COUPONS, []);
+  const updatedCoupons = coupons.map((item) => {
+    if (item.id !== coupon.id) return item;
+    return {
+      ...item,
+      description: coupon.description.trim(),
+      expiry: coupon.expiry,
+    };
+  });
+  saveToStorage(STORAGE_KEYS.COUPONS, updatedCoupons);
+}
+
+export function deleteCoupon(id) {
+  const coupons = loadFromStorage(STORAGE_KEYS.COUPONS, []);
+  const updatedCoupons = coupons.filter((coupon) => {
+    if(coupon.id !== id) return true;
+    return false;
+  });
+
+  saveToStorage(STORAGE_KEYS.COUPONS, updatedCoupons);
+}
+
 // ---------- Cart ----------
 
 export function loadCart(userId) {

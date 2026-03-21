@@ -4,6 +4,7 @@ import { CartProvider } from "./CartContext.jsx";
 import { WishlistProvider } from "./WishlistContext.jsx";
 import { OrdersProvider } from "./OrdersContext.jsx";
 import { ProductProvider } from "./ProductsContext.jsx";
+import { CouponProvider } from "./CouponContext.jsx";
 
 // AppProviders composes all of our context providers
 // into a single component. This keeps main.jsx clean
@@ -14,7 +15,9 @@ export function AppProviders({ children }) {
       <ProductProvider>
         <CartProvider>
           <WishlistProvider>
-            <OrdersProvider>{children}</OrdersProvider>
+            <CouponProvider>
+              <OrdersProvider>{children}</OrdersProvider>
+            </CouponProvider>
           </WishlistProvider>
         </CartProvider>
       </ProductProvider>

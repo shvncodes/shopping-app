@@ -84,12 +84,6 @@ export function ProductModal({
       price: Number(productPrice),
       category: productCategory.trim(),
     });
-    setProductName("");
-    setProductDescription("");
-    setProductBadge("");
-    setProductType("");
-    setProductPrice(0);
-    setProductCategory("");
   };
 
   const updateProduct = () => {

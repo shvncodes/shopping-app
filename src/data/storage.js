@@ -10,7 +10,8 @@ export const STORAGE_KEYS = {
   CART: 'shopping_app_cart',
   WISHLIST: 'shopping_app_wishlist',
   ORDERS: 'shopping_app_orders',
-  PRODUCTS: 'shopping_app_products'
+  PRODUCTS: 'shopping_app_products',
+  COUPONS: 'shopping_app_coupons'
 }
 
 // Safely read a JSON value from localStorage.
